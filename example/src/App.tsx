@@ -30,9 +30,15 @@ export default function App() {
       <FlatList
         data={[
           {
-            title: 'Throw example error',
+            title: 'Throw error',
             action: () => {
               throw new Error(message);
+            },
+          },
+          {
+            title: 'Rejected promise',
+            action: () => {
+              Promise.reject(new Error(message));
             },
           },
           {
