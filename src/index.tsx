@@ -3,7 +3,11 @@ import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStac
 
 type ConsoleLogFunction = (...args: unknown[]) => void;
 
-export const installConsoleSymbolicator = () => {
+export const installConsoleSymbolicator = ({
+  excludeReactNativeCoreFrames = false,
+}: {
+  excludeReactNativeCoreFrames?: boolean;
+} = {}) => {
   if (!__DEV__) {
     return;
   }
@@ -18,7 +22,10 @@ export const installConsoleSymbolicator = () => {
   };
 
   const makeSymbolicatedConsole = (fn: ConsoleLogFunction) =>
-    symbolicatedConsole(fn, originalConsole.error);
+    symbolicatedConsole(fn, {
+      logError: originalConsole.error,
+      excludeReactNativeCoreFrames,
+    });
 
   console.error = makeSymbolicatedConsole(originalConsole.error);
   console.warn = makeSymbolicatedConsole(originalConsole.warn);
@@ -31,7 +38,16 @@ export const installConsoleSymbolicator = () => {
 };
 
 const symbolicatedConsole =
-  (original: ConsoleLogFunction, logError: ConsoleLogFunction) =>
+  (
+    original: ConsoleLogFunction,
+    {
+      logError,
+      excludeReactNativeCoreFrames,
+    }: {
+      logError: ConsoleLogFunction;
+      excludeReactNativeCoreFrames: boolean;
+    }
+  ) =>
   async (...args: unknown[]) => {
     const symbolicating: Array<Promise<unknown>> = args.map(async (arg) => {
       if (!(arg instanceof Error) || !arg.stack) {
@@ -65,6 +81,11 @@ const symbolicatedConsole =
                   : 'unknown';
               return `    at ${frame.methodName} (${fileInfo})`;
             }
+          )
+          .filter(
+            (line: string) =>
+              !excludeReactNativeCoreFrames ||
+              !line.includes('node_modules/react-native')
           )
           .join('\n');
 

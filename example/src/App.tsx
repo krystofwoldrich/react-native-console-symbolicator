@@ -9,7 +9,9 @@ import {
 import { installConsoleSymbolicator } from 'react-native-console-symbolicator';
 import Button from './components/Button';
 
-installConsoleSymbolicator();
+installConsoleSymbolicator({
+  excludeReactNativeCoreFrames: true,
+});
 
 const message =
   'When reading this error in React Native Dev Tools, you should see the original source code location instead of the bundle.';
