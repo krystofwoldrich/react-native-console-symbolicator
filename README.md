@@ -12,11 +12,13 @@ npm install react-native-console-symbolicator
 
 
 ```js
-import { multiply } from 'react-native-console-symbolicator';
+import { installConsoleSymbolicator } from 'react-native-console-symbolicator';
 
 // ...
 
-const result = await multiply(3, 7);
+installConsoleSymbolicator({
+  excludeReactNativeCoreFrames: true,
+});
 ```
 
 
