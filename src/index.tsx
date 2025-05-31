@@ -45,6 +45,11 @@ const symbolicatedConsole =
           // @ts-ignore - the TS types are broken, the function requires the stack string not the error object
           parseErrorStack(arg.stack)
         );
+
+        if (!frames || frames.length === 0) {
+          return arg;
+        }
+
         const newStack = frames
           .map(
             (frame: {
