@@ -3,9 +3,36 @@ import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStac
 
 type ConsoleLogFunction = (...args: unknown[]) => void;
 
+/**
+ * Installs a console symbolicator that will symbolicate stack traces in console
+ * logs, making it easier to debug errors in React Native applications.
+ *
+ * This function should be called at the start of your application, typically
+ * in the entry file (e.g., `_layout.tsx` or `App.tsx`).
+ *
+ * @param {Object} options - Configuration options for the symbolicator.
+ * @param {boolean} [options.excludeReactNativeCoreFrames=false] - If set to `true`,
+ *   the symbolicator will drop frames from `node_modules/react-native`
+ *   package. This helps readability of the stack trace, but information
+ *   about the internal React Native Core stack is lost.
+ *
+ * @example
+ * installConsoleSymbolicator({ excludeReactNativeCoreFrames: true });
+ */
 export const installConsoleSymbolicator = ({
   excludeReactNativeCoreFrames = false,
 }: {
+  /**
+   * If set to `true`,
+   * the symbolicator will drop frames from `node_modules/react-native`
+   * package. This helps readability of the stack trace, but information
+   * about the internal React Native Core stack is lost.
+   *
+   * @default false
+   *
+   * @example
+   * installConsoleSymbolicator({ excludeReactNativeCoreFrames: true });
+   */
   excludeReactNativeCoreFrames?: boolean;
 } = {}) => {
   if (!__DEV__) {

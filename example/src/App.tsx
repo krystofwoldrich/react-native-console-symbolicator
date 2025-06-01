@@ -14,7 +14,7 @@ installConsoleSymbolicator({
 });
 
 const message =
-  'When reading this error in React Native Dev Tools, you should see the original source code location instead of the bundle.';
+  'When reading this error in React Native DevTools, you should see the original source code location instead of the bundle.';
 
 export default function App() {
   const colorScheme = useColorScheme();
