@@ -118,7 +118,9 @@ const symbolicatedConsole =
           )
           .join('\n');
 
-        arg.stack = arg.message ? `${arg.message}\n${newStack}` : newStack;
+        arg.stack = arg.message
+          ? `${arg.name}: ${arg.message}\n${newStack}`
+          : `${arg.name}\n${newStack}`;
       } catch (Oo) {
         logError('Error during symbolication:', Oo);
       }
