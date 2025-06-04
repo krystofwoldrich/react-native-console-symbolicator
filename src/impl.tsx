@@ -45,6 +45,7 @@ export const installConsoleSymbolicator = ({
     log: console.log,
     info: console.info,
     debug: console.debug,
+    // @ts-ignore - the current RN types do not include `assert` in the Console type
     assert: console.assert,
   };
 
@@ -59,6 +60,7 @@ export const installConsoleSymbolicator = ({
   console.log = makeSymbolicatedConsole(originalConsole.log);
   console.info = makeSymbolicatedConsole(originalConsole.info);
   console.debug = makeSymbolicatedConsole(originalConsole.debug);
+  // @ts-ignore - the current RN types do not include `assert` in the Console type
   console.assert = makeSymbolicatedConsole(
     originalConsole.assert as ConsoleLogFunction
   );
