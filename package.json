@@ -1,6 +1,6 @@
 {
   "name": "react-native-console-symbolicator",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Make all Errors logged via `console` API readable inside React Native Dev Tools.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
